@@ -27,7 +27,8 @@ document.getElementById('randomGameBtn').addEventListener('click', () => {
         { name: '幸运转盘', icon: '🎯', desc: '双转盘选玩家+游戏' },
         { name: '数字炸弹', icon: '💣', desc: '猜数字，猜中喝酒' },
         { name: '真心话大冒险', icon: '🎭', desc: '随机抽取题目' },
-        { name: '掷骰子', icon: '🎲', desc: '比大小定胜负' }
+        { name: '掷骰子', icon: '🎲', desc: '比大小定胜负' },
+        { name: '抽扑克', icon: '🃏', desc: '随机抽牌，不重复' }
     ];
     const result = document.getElementById('randomResult');
     let count = 0;
@@ -38,10 +39,63 @@ document.getElementById('randomGameBtn').addEventListener('click', () => {
         if (count > 15) {
             clearInterval(interval);
             const chosen = games[Math.floor(Math.random() * games.length)];
-            result.innerHTML = `${chosen.icon} <strong style="color:#e94560;font-size:1.5rem">${chosen.name}</strong><br><small>${chosen.desc}</small><br><button onclick="showSection('${chosen.name === '幸运转盘' ? 'wheel' : chosen.name === '数字炸弹' ? 'bomb' : chosen.name === '真心话大冒险' ? 'truth' : 'dice'}')" class="btn-secondary" style="margin-top:10px">开始玩</button>`;
+            const sectionMap = { '幸运转盘': 'wheel', '数字炸弹': 'bomb', '真心话大冒险': 'truth', '掷骰子': 'dice', '抽扑克': 'poker' };
+            result.innerHTML = `${chosen.icon} <strong style="color:#e94560;font-size:1.5rem">${chosen.name}</strong><br><small>${chosen.desc}</small><br><button onclick="showSection('${sectionMap[chosen.name]}')" class="btn-secondary" style="margin-top:10px">开始玩</button>`;
         }
     }, 80);
 });
+
+// History Manager
+class HistoryManager {
+    constructor(maxSize = 5) {
+        this.maxSize = maxSize;
+        this.diceHistory = [];
+        this.pokerHistory = [];
+    }
+
+    addDice(roundText) {
+        this.diceHistory.push({ text: roundText, time: this.now() });
+        if (this.diceHistory.length > this.maxSize) this.diceHistory.shift();
+        this.renderDice();
+    }
+
+    addPoker(roundText) {
+        this.pokerHistory.push({ text: roundText, time: this.now() });
+        if (this.pokerHistory.length > this.maxSize) this.pokerHistory.shift();
+        this.renderPoker();
+    }
+
+    now() {
+        const d = new Date();
+        return `${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
+    }
+
+    renderDice() {
+        const container = document.getElementById('diceHistory');
+        container.innerHTML = this.diceHistory.map((item, i) => `
+            <div class="history-item">
+                <span class="round">第${this.diceHistory.length - i}局</span>
+                <span class="content">${item.text}</span>
+                <span class="time">${item.time}</span>
+            </div>
+        `).reverse().join('') || '<div class="history-item"><span class="content">暂无记录</span></div>';
+    }
+
+    renderPoker() {
+        const container = document.getElementById('pokerHistory');
+        container.innerHTML = this.pokerHistory.map((item, i) => `
+            <div class="history-item">
+                <span class="round">第${this.pokerHistory.length - i}局</span>
+                <span class="content">${item.text}</span>
+                <span class="time">${item.time}</span>
+            </div>
+        `).reverse().join('') || '<div class="history-item"><span class="content">暂无记录</span></div>';
+    }
+}
+
+const historyMgr = new HistoryManager(5);
+historyMgr.renderDice();
+historyMgr.renderPoker();
 
 // Wheel Class
 class Wheel {
@@ -286,6 +340,8 @@ function showCard(type) {
 }
 
 // Dice Game
+let diceRound = 0;
+
 document.getElementById('rollDiceBtn').addEventListener('click', () => {
     const count = parseInt(document.getElementById('diceCount').value) || 1;
     const container = document.getElementById('diceContainer');
@@ -293,13 +349,17 @@ document.getElementById('rollDiceBtn').addEventListener('click', () => {
     container.innerHTML = '';
 
     let total = 0;
+    const values = [];
     for (let i = 0; i < count; i++) {
         const value = Math.floor(Math.random() * 6) + 1;
         total += value;
+        values.push(value);
         container.appendChild(createDice(value));
     }
 
+    diceRound++;
     totalEl.innerHTML = `总和: <strong style="color:#e94560;font-size:2rem">${total}</strong>`;
+    historyMgr.addDice(`掷出 ${count} 颗骰子: [${values.join(', ')}] = ${total}`);
 });
 
 function createDice(value) {
@@ -325,3 +385,86 @@ function createDice(value) {
     }
     return dice;
 }
+
+// Poker Game
+const SUITS = [
+    { name: 'spades', symbol: '♠', color: 'black' },
+    { name: 'hearts', symbol: '♥', color: 'red' },
+    { name: 'clubs', symbol: '♣', color: 'black' },
+    { name: 'diamonds', symbol: '♦', color: 'red' }
+];
+const RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+
+let fullDeck = [];
+let remainingDeck = [];
+let pokerRound = 0;
+
+function createDeck() {
+    const deck = [];
+    for (const suit of SUITS) {
+        for (const rank of RANKS) {
+            deck.push({ suit, rank });
+        }
+    }
+    return deck;
+}
+
+function shuffle(deck) {
+    const arr = [...deck];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+function initPoker() {
+    fullDeck = createDeck();
+    remainingDeck = shuffle([...fullDeck]);
+}
+
+function drawCards(count) {
+    if (remainingDeck.length < count) {
+        remainingDeck = shuffle([...fullDeck]);
+    }
+    return remainingDeck.splice(0, count);
+}
+
+function createPokerCard(card) {
+    const el = document.createElement('div');
+    el.className = `poker-card ${card.suit.color}`;
+    el.innerHTML = `
+        <div class="poker-top">${card.rank}<br>${card.suit.symbol}</div>
+        <div class="poker-center">${card.suit.symbol}</div>
+        <div class="poker-bottom">${card.rank}<br>${card.suit.symbol}</div>
+    `;
+    return el;
+}
+
+document.getElementById('drawPokerBtn').addEventListener('click', () => {
+    const count = parseInt(document.getElementById('pokerCount').value) || 1;
+    if (count > 10) {
+        document.getElementById('pokerResult').innerHTML = '一次最多抽10张牌';
+        return;
+    }
+
+    const container = document.getElementById('pokerContainer');
+    const resultEl = document.getElementById('pokerResult');
+    container.innerHTML = '';
+
+    const cards = drawCards(count);
+    cards.forEach(card => container.appendChild(createPokerCard(card)));
+
+    pokerRound++;
+    const cardTexts = cards.map(c => `${c.suit.symbol}${c.rank}`).join(' ');
+    resultEl.innerHTML = `抽到 <strong style="color:#e94560;font-size:1.4rem">${count}</strong> 张牌，剩余牌堆: <strong>${remainingDeck.length}</strong> 张`;
+    historyMgr.addPoker(cardTexts);
+});
+
+document.getElementById('resetPokerBtn').addEventListener('click', () => {
+    initPoker();
+    document.getElementById('pokerContainer').innerHTML = '';
+    document.getElementById('pokerResult').innerHTML = `牌组已重置，共 <strong>52</strong> 张牌`;
+});
+
+initPoker();

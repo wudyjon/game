@@ -19,6 +19,7 @@
             <button class="nav-btn" data-game="bomb">数字炸弹</button>
             <button class="nav-btn" data-game="truth">真心话大冒险</button>
             <button class="nav-btn" data-game="dice">掷骰子</button>
+            <button class="nav-btn" data-game="poker">抽扑克</button>
         </nav>
 
         <!-- 游戏主页 -->
@@ -48,6 +49,11 @@
                     <div class="card-icon">🎲</div>
                     <h3>掷骰子</h3>
                     <p>支持多颗骰子，比大小定胜负</p>
+                </div>
+                <div class="card" data-game="poker">
+                    <div class="card-icon">🃏</div>
+                    <h3>抽扑克</h3>
+                    <p>随机抽取扑克牌，不重复，比比谁大</p>
                 </div>
             </div>
         </section>
@@ -149,6 +155,28 @@
             </div>
             <div id="diceContainer" class="dice-container"></div>
             <div id="diceTotal" class="result-box"></div>
+
+            <div class="history-box">
+                <h4>📋 最近5局记录</h4>
+                <div id="diceHistory" class="history-list"></div>
+            </div>
+        </section>
+
+        <!-- 抽扑克 -->
+        <section id="poker" class="game-section">
+            <h2>🃏 抽扑克</h2>
+            <div class="dice-setup">
+                <label>抽取张数: <input type="number" id="pokerCount" value="1" min="1" max="10"></label>
+                <button id="drawPokerBtn" class="btn-primary">抽牌</button>
+                <button id="resetPokerBtn" class="btn-secondary">重置牌组</button>
+            </div>
+            <div id="pokerContainer" class="poker-container"></div>
+            <div id="pokerResult" class="result-box"></div>
+
+            <div class="history-box">
+                <h4>📋 最近5局记录</h4>
+                <div id="pokerHistory" class="history-list"></div>
+            </div>
         </section>
 
         <footer>
