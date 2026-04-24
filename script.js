@@ -72,28 +72,30 @@ class HistoryManager {
 
     renderDice() {
         const container = document.getElementById('diceHistory');
-        container.innerHTML = this.diceHistory.map((item, i) => `
+        const labels = ['本局', '上1局', '上2局'];
+        container.innerHTML = [...this.diceHistory].reverse().map((item, i) => `
             <div class="history-item">
-                <span class="round">第${this.diceHistory.length - i}局</span>
+                <span class="round">${labels[i] || ''}</span>
                 <span class="content">${item.text}</span>
                 <span class="time">${item.time}</span>
             </div>
-        `).reverse().join('') || '<div class="history-item"><span class="content">暂无记录</span></div>';
+        `).join('') || '<div class="history-item"><span class="content">暂无记录</span></div>';
     }
 
     renderPoker() {
         const container = document.getElementById('pokerHistory');
-        container.innerHTML = this.pokerHistory.map((item, i) => `
+        const labels = ['本局', '上1局', '上2局'];
+        container.innerHTML = [...this.pokerHistory].reverse().map((item, i) => `
             <div class="history-item">
-                <span class="round">第${this.pokerHistory.length - i}局</span>
+                <span class="round">${labels[i] || ''}</span>
                 <span class="content">${item.text}</span>
                 <span class="time">${item.time}</span>
             </div>
-        `).reverse().join('') || '<div class="history-item"><span class="content">暂无记录</span></div>';
+        `).join('') || '<div class="history-item"><span class="content">暂无记录</span></div>';
     }
 }
 
-const historyMgr = new HistoryManager(5);
+const historyMgr = new HistoryManager(3);
 historyMgr.renderDice();
 historyMgr.renderPoker();
 
