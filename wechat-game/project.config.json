@@ -1,7 +1,8 @@
 {
   "description": "酒桌小游戏",
   "packOptions": {
-    "ignore": []
+    "ignore": [],
+    "include": []
   },
   "setting": {
     "urlCheck": false,
@@ -39,15 +40,22 @@
     "disableUseStrict": false,
     "minifyWXML": false,
     "showES6CompileOption": false,
-    "useCompilerPlugins": false
+    "useCompilerPlugins": false,
+    "compileWorklet": false,
+    "localPlugins": false,
+    "condition": false,
+    "swc": false,
+    "disableSWC": true
   },
   "compileType": "game",
   "libVersion": "3.0.0",
-  "appid": "wxgame",
+  "appid": "wx563cfa8de4e4333c",
   "projectname": "drinking-games",
   "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
-  }
+  },
+  "simulatorPluginLibVersion": {},
+  "isGameTourist": false
 }
