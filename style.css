@@ -523,45 +523,265 @@ header p {
 
 footer {
     text-align: center;
-    padding: 40px 0 20px;
+    padding: 20px 0 10px;
     color: #666;
 }
 
 @media (max-width: 768px) {
-    .dual-wheel-wrapper {
-        grid-template-columns: 1fr;
-        gap: 20px;
+    .container {
+        padding: 10px;
     }
 
-    .wheel-container-small {
-        width: 260px;
-        height: 260px;
-    }
-
-    #wheelCanvasLeft, #wheelCanvasRight {
-        width: 260px;
-        height: 260px;
+    header {
+        padding: 15px 0 10px;
     }
 
     header h1 {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
+    }
+
+    header p {
+        font-size: 0.85rem;
     }
 
     .game-nav {
-        justify-content: flex-start;
+        gap: 6px;
+        padding: 8px 0;
+        margin-bottom: 10px;
+    }
+
+    .nav-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+
+    .btn-primary {
+        padding: 10px 24px;
+        font-size: 1rem;
+    }
+
+    .btn-secondary {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+
+    .random-picker {
+        padding: 20px 12px;
+        margin-bottom: 15px;
+    }
+
+    .random-picker h2 {
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+    }
+
+    .game-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .card {
+        padding: 15px 8px;
+        border-radius: 14px;
+    }
+
+    .card-icon {
+        font-size: 2rem;
+        margin-bottom: 8px;
+    }
+
+    .card h3 {
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+    }
+
+    .card p {
+        font-size: 0.7rem;
+    }
+
+    .dual-wheel-wrapper {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-top: 10px;
+    }
+
+    .wheel-panel {
+        padding: 12px;
+        border-radius: 14px;
+    }
+
+    .wheel-panel h3 {
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+
+    .wheel-container-small {
+        width: 200px;
+        height: 200px;
+        margin: 8px auto;
+    }
+
+    #wheelCanvasLeft, #wheelCanvasRight {
+        width: 200px;
+        height: 200px;
+    }
+
+    .wheel-pointer {
+        font-size: 1.5rem;
+        top: -10px;
+    }
+
+    .players-input {
+        padding: 10px;
+        margin-top: 10px;
+    }
+
+    .players-input h4 {
+        font-size: 0.85rem;
+        margin-bottom: 8px;
     }
 
     .player-input {
         width: calc(100% - 10px);
+        padding: 6px 10px;
+        font-size: 0.85rem;
+        margin: 3px;
+    }
+
+    .result-box {
+        padding: 10px;
+        font-size: 1rem;
+        min-height: 40px;
+    }
+
+    .bomb-setup {
+        padding: 10px;
+    }
+
+    .bomb-setup input {
+        width: 70px;
+        padding: 8px;
+        font-size: 1rem;
+    }
+
+    .bomb-game {
+        padding: 10px;
+    }
+
+    .bomb-info {
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+
+    .bomb-display {
+        font-size: 3rem;
+        margin: 10px 0;
+    }
+
+    #bombGuess {
+        padding: 10px;
+        font-size: 1.2rem;
+        width: 160px;
+    }
+
+    .truth-buttons {
+        gap: 8px;
+        margin: 15px 0;
+    }
+
+    .btn-truth, .btn-dare {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+
+    .truth-card {
+        padding: 20px 15px;
+        margin: 10px 0;
+    }
+
+    .card-type {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+
+    .card-content {
+        font-size: 1.1rem;
+    }
+
+    .dice-setup {
+        padding: 10px;
+    }
+
+    .dice-setup input {
+        width: 60px;
+        padding: 8px;
+        font-size: 1rem;
+    }
+
+    .dice-container {
+        gap: 10px;
+        margin: 15px 0;
+        min-height: 60px;
+    }
+
+    .dice {
+        width: 56px;
+        height: 56px;
+        border-radius: 10px;
+        padding: 5px;
+    }
+
+    .dice-dot {
+        width: 10px;
+        height: 10px;
+    }
+
+    .poker-container {
+        gap: 8px;
+        margin: 15px 0;
+        min-height: 80px;
+    }
+
+    .poker-card {
+        width: 64px;
+        height: 92px;
+        border-radius: 8px;
+        border-width: 1px;
+    }
+
+    .poker-top, .poker-bottom {
+        font-size: 0.7rem;
+    }
+
+    .poker-center {
+        font-size: 1.5rem;
+    }
+
+    .history-box {
+        padding: 12px;
+        margin-top: 15px;
+    }
+
+    .history-box h4 {
+        font-size: 0.85rem;
+        margin-bottom: 8px;
     }
 
     .history-item {
-        flex-wrap: wrap;
-        gap: 5px;
+        padding: 8px 10px;
+        font-size: 0.85rem;
+    }
+
+    .history-item .round {
+        min-width: 45px;
     }
 
     .history-item .time {
-        text-align: left;
-        width: 100%;
+        font-size: 0.7rem;
+        min-width: 55px;
+    }
+
+    footer {
+        padding: 15px 0 8px;
     }
 }
