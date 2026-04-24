@@ -160,15 +160,36 @@ header p {
     font-size: 0.9rem;
 }
 
-/* Wheel */
-.wheel-container {
-    position: relative;
-    width: 400px;
-    height: 400px;
-    margin: 20px auto;
+/* Dual Wheel */
+.dual-wheel-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 20px;
 }
 
-#wheelCanvas {
+.wheel-panel {
+    background: rgba(255,255,255,0.03);
+    border-radius: 20px;
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.08);
+    text-align: center;
+}
+
+.wheel-panel h3 {
+    margin-bottom: 15px;
+    color: #f39422;
+    font-size: 1.3rem;
+}
+
+.wheel-container-small {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    margin: 15px auto;
+}
+
+#wheelCanvasLeft, #wheelCanvasRight {
     max-width: 100%;
     border-radius: 50%;
     box-shadow: 0 0 30px rgba(0,0,0,0.5);
@@ -176,10 +197,10 @@ header p {
 
 .wheel-pointer {
     position: absolute;
-    top: -20px;
+    top: -15px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: #e94560;
     z-index: 10;
     text-shadow: 0 2px 5px rgba(0,0,0,0.5);
@@ -187,25 +208,27 @@ header p {
 
 .players-input {
     background: rgba(255,255,255,0.05);
-    padding: 20px;
+    padding: 15px;
     border-radius: 15px;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
-.players-input h3 {
-    margin-bottom: 15px;
+.players-input h4 {
+    margin-bottom: 12px;
+    color: #aaa;
+    font-size: 1rem;
 }
 
 .player-input {
-    padding: 10px 15px;
-    margin: 5px;
+    padding: 8px 12px;
+    margin: 4px;
     border: 1px solid rgba(255,255,255,0.2);
     border-radius: 10px;
     background: rgba(255,255,255,0.1);
     color: #fff;
-    font-size: 1rem;
-    width: calc(50% - 20px);
-    min-width: 150px;
+    font-size: 0.95rem;
+    width: calc(50% - 12px);
+    min-width: 120px;
 }
 
 .player-input::placeholder {
@@ -393,15 +416,20 @@ footer {
     color: #666;
 }
 
-@media (max-width: 600px) {
-    .wheel-container {
-        width: 300px;
-        height: 300px;
+@media (max-width: 768px) {
+    .dual-wheel-wrapper {
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
 
-    #wheelCanvas {
-        width: 300px;
-        height: 300px;
+    .wheel-container-small {
+        width: 260px;
+        height: 260px;
+    }
+
+    #wheelCanvasLeft, #wheelCanvasRight {
+        width: 260px;
+        height: 260px;
     }
 
     header h1 {
@@ -410,5 +438,9 @@ footer {
 
     .game-nav {
         justify-content: flex-start;
+    }
+
+    .player-input {
+        width: calc(100% - 10px);
     }
 }

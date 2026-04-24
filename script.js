@@ -24,7 +24,7 @@ function showSection(game) {
 // Random Game Picker
 document.getElementById('randomGameBtn').addEventListener('click', () => {
     const games = [
-        { name: '幸运转盘', icon: '🎯', desc: '转盘选择幸运儿' },
+        { name: '幸运转盘', icon: '🎯', desc: '双转盘选玩家+游戏' },
         { name: '数字炸弹', icon: '💣', desc: '猜数字，猜中喝酒' },
         { name: '真心话大冒险', icon: '🎭', desc: '随机抽取题目' },
         { name: '掷骰子', icon: '🎲', desc: '比大小定胜负' }
@@ -43,107 +43,140 @@ document.getElementById('randomGameBtn').addEventListener('click', () => {
     }, 80);
 });
 
-// Wheel Game
-const canvas = document.getElementById('wheelCanvas');
-const ctx = canvas.getContext('2d');
-let players = ['玩家1', '玩家2', '玩家3'];
-let currentAngle = 0;
-let spinning = false;
+// Wheel Class
+class Wheel {
+    constructor(canvasId, items, resultId, spinBtnId, listId, addBtnId, resetBtnId, defaultItems) {
+        this.canvas = document.getElementById(canvasId);
+        this.ctx = this.canvas.getContext('2d');
+        this.items = [...items];
+        this.resultEl = document.getElementById(resultId);
+        this.currentAngle = 0;
+        this.spinning = false;
+        this.colors = ['#e94560', '#0f3460', '#533483', '#f39422', '#16c79a', '#ef476f', '#118ab2', '#073b4c', '#e74c3c', '#27ae60'];
+        this.defaultItems = defaultItems;
 
-function drawWheel() {
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-    const radius = 180;
-    const sliceAngle = (2 * Math.PI) / players.length;
-    const colors = ['#e94560', '#0f3460', '#533483', '#f39422', '#16c79a', '#ef476f', '#118ab2', '#073b4c'];
+        this.draw();
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    for (let i = 0; i < players.length; i++) {
-        ctx.beginPath();
-        ctx.moveTo(centerX, centerY);
-        ctx.arc(centerX, centerY, radius, currentAngle + i * sliceAngle, currentAngle + (i + 1) * sliceAngle);
-        ctx.fillStyle = colors[i % colors.length];
-        ctx.fill();
-        ctx.strokeStyle = '#fff';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-        ctx.save();
-        ctx.translate(centerX, centerY);
-        ctx.rotate(currentAngle + i * sliceAngle + sliceAngle / 2);
-        ctx.textAlign = 'right';
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 16px sans-serif';
-        ctx.fillText(players[i], radius - 20, 5);
-        ctx.restore();
+        document.getElementById(spinBtnId).addEventListener('click', () => this.spin());
+        document.getElementById(addBtnId).addEventListener('click', () => this.addItem(listId));
+        document.getElementById(resetBtnId).addEventListener('click', () => this.resetItems(listId));
+        document.getElementById(listId).addEventListener('input', () => this.updateItems(listId));
     }
 
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, 30, 0, 2 * Math.PI);
-    ctx.fillStyle = '#fff';
-    ctx.fill();
-    ctx.strokeStyle = '#e94560';
-    ctx.lineWidth = 3;
-    ctx.stroke();
-}
+    draw() {
+        const centerX = this.canvas.width / 2;
+        const centerY = this.canvas.height / 2;
+        const radius = this.canvas.width / 2 - 20;
+        const sliceAngle = (2 * Math.PI) / this.items.length;
 
-drawWheel();
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-document.getElementById('spinBtn').addEventListener('click', () => {
-    if (spinning) return;
-    spinning = true;
-    const result = document.getElementById('wheelResult');
-    result.innerHTML = '';
+        for (let i = 0; i < this.items.length; i++) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(centerX, centerY);
+            this.ctx.arc(centerX, centerY, radius, this.currentAngle + i * sliceAngle, this.currentAngle + (i + 1) * sliceAngle);
+            this.ctx.fillStyle = this.colors[i % this.colors.length];
+            this.ctx.fill();
+            this.ctx.strokeStyle = '#fff';
+            this.ctx.lineWidth = 2;
+            this.ctx.stroke();
 
-    let velocity = Math.random() * 10 + 20;
-    const deceleration = 0.2;
-
-    function animate() {
-        currentAngle += velocity * 0.05;
-        velocity -= deceleration;
-        drawWheel();
-
-        if (velocity > 0) {
-            requestAnimationFrame(animate);
-        } else {
-            spinning = false;
-            const sliceAngle = (2 * Math.PI) / players.length;
-            const normalizedAngle = ((2 * Math.PI) - (currentAngle % (2 * Math.PI)) + Math.PI / 2) % (2 * Math.PI);
-            const winnerIndex = Math.floor(normalizedAngle / sliceAngle) % players.length;
-            const winner = players[winnerIndex];
-            result.innerHTML = `🎉 恭喜 <strong style="color:#e94560;font-size:1.5rem">${winner}</strong> 被选中！`;
+            this.ctx.save();
+            this.ctx.translate(centerX, centerY);
+            this.ctx.rotate(this.currentAngle + i * sliceAngle + sliceAngle / 2);
+            this.ctx.textAlign = 'right';
+            this.ctx.fillStyle = '#fff';
+            this.ctx.font = 'bold 14px sans-serif';
+            this.ctx.fillText(this.items[i], radius - 15, 5);
+            this.ctx.restore();
         }
+
+        this.ctx.beginPath();
+        this.ctx.arc(centerX, centerY, 25, 0, 2 * Math.PI);
+        this.ctx.fillStyle = '#fff';
+        this.ctx.fill();
+        this.ctx.strokeStyle = '#e94560';
+        this.ctx.lineWidth = 3;
+        this.ctx.stroke();
     }
-    animate();
-});
 
-document.getElementById('addPlayerBtn').addEventListener('click', () => {
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.className = 'player-input';
-    input.placeholder = `玩家${players.length + 1}`;
-    input.value = `玩家${players.length + 1}`;
-    document.getElementById('playersList').appendChild(input);
-    updatePlayers();
-});
+    spin() {
+        if (this.spinning) return;
+        this.spinning = true;
+        this.resultEl.innerHTML = '';
 
-document.getElementById('resetPlayersBtn').addEventListener('click', () => {
-    document.getElementById('playersList').innerHTML = `
-        <input type="text" class="player-input" placeholder="玩家1" value="玩家1">
-        <input type="text" class="player-input" placeholder="玩家2" value="玩家2">
-        <input type="text" class="player-input" placeholder="玩家3" value="玩家3">
-    `;
-    updatePlayers();
-});
+        let velocity = Math.random() * 10 + 20;
+        const deceleration = 0.15 + Math.random() * 0.1;
 
-document.getElementById('playersList').addEventListener('input', updatePlayers);
+        const animate = () => {
+            this.currentAngle += velocity * 0.05;
+            velocity -= deceleration;
+            this.draw();
 
-function updatePlayers() {
-    const inputs = document.querySelectorAll('.player-input');
-    players = Array.from(inputs).map(i => i.value || i.placeholder);
-    drawWheel();
+            if (velocity > 0) {
+                requestAnimationFrame(animate);
+            } else {
+                this.spinning = false;
+                const sliceAngle = (2 * Math.PI) / this.items.length;
+                const normalizedAngle = ((2 * Math.PI) - (this.currentAngle % (2 * Math.PI)) + Math.PI / 2) % (2 * Math.PI);
+                const winnerIndex = Math.floor(normalizedAngle / sliceAngle) % this.items.length;
+                const winner = this.items[winnerIndex];
+                this.resultEl.innerHTML = `🎉 <strong style="color:#e94560;font-size:1.4rem">${winner}</strong>`;
+            }
+        };
+        animate();
+    }
+
+    addItem(listId) {
+        const container = document.getElementById(listId);
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'player-input';
+        input.placeholder = `${this.defaultItems[0]}${this.items.length + 1}`;
+        input.value = `${this.defaultItems[0]}${this.items.length + 1}`;
+        container.appendChild(input);
+        this.updateItems(listId);
+    }
+
+    resetItems(listId) {
+        const container = document.getElementById(listId);
+        container.innerHTML = this.defaultItems.map((item, i) =>
+            `<input type="text" class="player-input" placeholder="${item}" value="${item}">`
+        ).join('');
+        this.updateItems(listId);
+    }
+
+    updateItems(listId) {
+        const inputs = document.getElementById(listId).querySelectorAll('.player-input');
+        this.items = Array.from(inputs).map(i => i.value || i.placeholder).filter(v => v.trim() !== '');
+        if (this.items.length === 0) this.items = ['?'];
+        this.draw();
+    }
 }
+
+// Initialize Left Wheel (Players)
+const playerWheel = new Wheel(
+    'wheelCanvasLeft',
+    ['玩家1', '玩家2', '玩家3'],
+    'wheelResultLeft',
+    'spinBtnLeft',
+    'playersList',
+    'addPlayerBtn',
+    'resetPlayersBtn',
+    ['玩家1', '玩家2', '玩家3']
+);
+
+// Initialize Right Wheel (Games/Punishments)
+const gameWheel = new Wheel(
+    'wheelCanvasRight',
+    ['喝1杯', '喝2杯', '真心话', '大冒险'],
+    'wheelResultRight',
+    'spinBtnRight',
+    'gamesList',
+    'addGameBtn',
+    'resetGamesBtn',
+    ['喝1杯', '喝2杯', '真心话', '大冒险']
+);
 
 // Bomb Game
 let bombNumber, bombMin, bombMax;

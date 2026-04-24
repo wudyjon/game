@@ -32,7 +32,7 @@
                 <div class="card" data-game="wheel">
                     <div class="card-icon">🎯</div>
                     <h3>幸运转盘</h3>
-                    <p>输入玩家名字，转盘随机选择幸运儿</p>
+                    <p>双转盘：随机玩家 + 随机惩罚/游戏</p>
                 </div>
                 <div class="card" data-game="bomb">
                     <div class="card-icon">💣</div>
@@ -54,23 +54,55 @@
 
         <!-- 幸运转盘 -->
         <section id="wheel" class="game-section">
-            <h2>🎯 幸运转盘</h2>
-            <div class="wheel-container">
-                <canvas id="wheelCanvas" width="400" height="400"></canvas>
-                <div class="wheel-pointer">▼</div>
-            </div>
-            <button id="spinBtn" class="btn-primary">开始转盘</button>
-            <div class="players-input">
-                <h3>玩家名单</h3>
-                <div id="playersList">
-                    <input type="text" class="player-input" placeholder="玩家1" value="玩家1">
-                    <input type="text" class="player-input" placeholder="玩家2" value="玩家2">
-                    <input type="text" class="player-input" placeholder="玩家3" value="玩家3">
+            <h2>🎯 幸运双转盘</h2>
+            <p style="text-align:center;color:#aaa;margin-bottom:20px;">左边选中谁，右边决定做什么，公平公正</p>
+
+            <div class="dual-wheel-wrapper">
+                <!-- 左边：玩家转盘 -->
+                <div class="wheel-panel">
+                    <h3>👤 玩家转盘</h3>
+                    <div class="wheel-container-small">
+                        <canvas id="wheelCanvasLeft" width="320" height="320"></canvas>
+                        <div class="wheel-pointer">▼</div>
+                    </div>
+                    <button id="spinBtnLeft" class="btn-primary">转玩家</button>
+                    <div id="wheelResultLeft" class="result-box"></div>
+
+                    <div class="players-input">
+                        <h4>玩家名单</h4>
+                        <div id="playersList">
+                            <input type="text" class="player-input" placeholder="玩家1" value="玩家1">
+                            <input type="text" class="player-input" placeholder="玩家2" value="玩家2">
+                            <input type="text" class="player-input" placeholder="玩家3" value="玩家3">
+                        </div>
+                        <button id="addPlayerBtn" class="btn-secondary">添加玩家</button>
+                        <button id="resetPlayersBtn" class="btn-secondary">重置名单</button>
+                    </div>
                 </div>
-                <button id="addPlayerBtn" class="btn-secondary">添加玩家</button>
-                <button id="resetPlayersBtn" class="btn-secondary">重置名单</button>
+
+                <!-- 右边：游戏/惩罚转盘 -->
+                <div class="wheel-panel">
+                    <h3>🎮 游戏转盘</h3>
+                    <div class="wheel-container-small">
+                        <canvas id="wheelCanvasRight" width="320" height="320"></canvas>
+                        <div class="wheel-pointer">▼</div>
+                    </div>
+                    <button id="spinBtnRight" class="btn-primary">转游戏</button>
+                    <div id="wheelResultRight" class="result-box"></div>
+
+                    <div class="players-input">
+                        <h4>游戏/惩罚项目</h4>
+                        <div id="gamesList">
+                            <input type="text" class="player-input" placeholder="项目1" value="喝1杯">
+                            <input type="text" class="player-input" placeholder="项目2" value="喝2杯">
+                            <input type="text" class="player-input" placeholder="项目3" value="真心话">
+                            <input type="text" class="player-input" placeholder="项目4" value="大冒险">
+                        </div>
+                        <button id="addGameBtn" class="btn-secondary">添加项目</button>
+                        <button id="resetGamesBtn" class="btn-secondary">重置项目</button>
+                    </div>
+                </div>
             </div>
-            <div id="wheelResult" class="result-box"></div>
         </section>
 
         <!-- 数字炸弹 -->
