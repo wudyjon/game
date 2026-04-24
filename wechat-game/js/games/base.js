@@ -18,7 +18,7 @@ export default class BaseScene {
       { label: '扑克', scene: 'poker' },
     ];
     const btnW = Layout.width / navItems.length;
-    const btnH = Layout.px(44);
+    const btnH = Layout.px(36);
     this.navHeight = btnH;
     navItems.forEach((item, i) => {
       this.navButtons.push({
@@ -54,11 +54,11 @@ export default class BaseScene {
     this.navButtons.forEach(btn => {
       if (btn.active) {
         ctx.fillStyle = '#e94560';
-        this.roundRect(ctx, btn.x + 2, navY + 4, btn.w - 4, btn.h - 8, Layout.px(16));
+        this.roundRect(ctx, btn.x + 2, navY + 3, btn.w - 4, btn.h - 6, Layout.px(12));
         ctx.fill();
       }
       ctx.fillStyle = btn.active ? '#fff' : 'rgba(255,255,255,0.7)';
-      ctx.font = `${Layout.fontSize(13)}px sans-serif`;
+      ctx.font = `${Layout.fontSize(11)}px sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(btn.label, btn.x + btn.w / 2, navY + btn.h / 2);
@@ -88,7 +88,7 @@ export default class BaseScene {
     } else {
       ctx.fillStyle = bgColor;
     }
-    this.roundRect(ctx, btn.x, btn.y, btn.w, btn.h, Layout.px(20));
+    this.roundRect(ctx, btn.x, btn.y, btn.w, btn.h, Layout.px(16));
     ctx.fill();
     ctx.fillStyle = textColor;
     ctx.font = `${Layout.fontSize(btn.fontSize || 16)}px sans-serif`;
@@ -108,7 +108,7 @@ export default class BaseScene {
 
   drawTitle(ctx, text, y) {
     ctx.fillStyle = '#fff';
-    ctx.font = `bold ${Layout.fontSize(22)}px sans-serif`;
+    ctx.font = `bold ${Layout.fontSize(18)}px sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
     ctx.fillText(text, Layout.width / 2, y);
@@ -116,7 +116,7 @@ export default class BaseScene {
 
   drawSubtitle(ctx, text, y, color = '#aaa') {
     ctx.fillStyle = color;
-    ctx.font = `${Layout.fontSize(13)}px sans-serif`;
+    ctx.font = `${Layout.fontSize(12)}px sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
     ctx.fillText(text, Layout.width / 2, y);

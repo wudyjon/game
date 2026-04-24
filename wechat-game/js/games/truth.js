@@ -35,23 +35,23 @@ export default class TruthScene extends BaseScene {
     this.cardText = '';
 
     this.btnTruth = {
-      x: Layout.px(30), y: Layout.px(120), w: Layout.width / 3 - Layout.px(20), h: Layout.px(44),
-      text: '真心话', fontSize: 14,
+      x: Layout.px(30), y: Layout.px(100), w: Layout.width / 3 - Layout.px(20), h: Layout.px(40),
+      text: '真心话', fontSize: 13,
       onTouchEnd: () => this.drawCard('truth')
     };
     this.btnDare = {
-      x: Layout.width / 3 + Layout.px(10), y: Layout.px(120), w: Layout.width / 3 - Layout.px(20), h: Layout.px(44),
-      text: '大冒险', fontSize: 14,
+      x: Layout.width / 3 + Layout.px(10), y: Layout.px(100), w: Layout.width / 3 - Layout.px(20), h: Layout.px(40),
+      text: '大冒险', fontSize: 13,
       onTouchEnd: () => this.drawCard('dare')
     };
     this.btnRandom = {
-      x: Layout.width * 2 / 3 + Layout.px(10), y: Layout.px(120), w: Layout.width / 3 - Layout.px(40), h: Layout.px(44),
-      text: '随机', fontSize: 14,
+      x: Layout.width * 2 / 3 + Layout.px(10), y: Layout.px(100), w: Layout.width / 3 - Layout.px(40), h: Layout.px(40),
+      text: '随机', fontSize: 13,
       onTouchEnd: () => this.drawCard(Math.random() > 0.5 ? 'truth' : 'dare')
     };
     this.btnNext = {
-      x: Layout.px(60), y: Layout.px(460), w: Layout.width - Layout.px(120), h: Layout.px(40),
-      text: '下一题', fontSize: 14,
+      x: Layout.px(60), y: Layout.px(380), w: Layout.width - Layout.px(120), h: Layout.px(36),
+      text: '下一题', fontSize: 13,
       onTouchEnd: () => { this.cardVisible = false; }
     };
     this.elements.push(this.btnTruth, this.btnDare, this.btnRandom, this.btnNext);
@@ -75,26 +75,26 @@ export default class TruthScene extends BaseScene {
 
     if (this.cardVisible) {
       const x = Layout.px(24);
-      const y = Layout.px(190);
+      const y = Layout.px(160);
       const w = Layout.width - Layout.px(48);
-      const h = Layout.px(240);
+      const h = Layout.px(200);
       this.drawPanel(ctx, x, y, w, h, 0.1);
       ctx.strokeStyle = 'rgba(255,255,255,0.2)';
       ctx.lineWidth = 2;
       ctx.stroke();
 
       ctx.fillStyle = this.cardType === 'truth' ? '#3498db' : '#e74c3c';
-      ctx.font = `bold ${Layout.fontSize(18)}px sans-serif`;
+      ctx.font = `bold ${Layout.fontSize(16)}px sans-serif`;
       ctx.textAlign = 'center';
-      ctx.fillText(this.cardType === 'truth' ? '💙 真心话' : '❤️ 大冒险', Layout.width / 2, y + Layout.px(30));
+      ctx.fillText(this.cardType === 'truth' ? '💙 真心话' : '❤️ 大冒险', Layout.width / 2, y + Layout.px(26));
 
       ctx.fillStyle = '#fff';
-      ctx.font = `${Layout.fontSize(16)}px sans-serif`;
+      ctx.font = `${Layout.fontSize(14)}px sans-serif`;
       const words = this.wrapText(ctx, this.cardText, w - Layout.px(40));
-      let ty = y + Layout.px(70);
+      let ty = y + Layout.px(58);
       words.forEach(line => {
         ctx.fillText(line, Layout.width / 2, ty);
-        ty += Layout.px(24);
+        ty += Layout.px(22);
       });
 
       this.drawButton(ctx, this.btnNext, 'rgba(255,255,255,0.15)', '#fff');

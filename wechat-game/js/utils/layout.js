@@ -6,7 +6,12 @@ const ratio = info.pixelRatio;
 const DESIGN_W = 375;
 const DESIGN_H = 667;
 
-const scale = Math.min(width / DESIGN_W, height / DESIGN_H);
+let scale = Math.min(width / DESIGN_W, height / DESIGN_H);
+
+// 在矮屏幕上进一步缩小，确保内容不超出
+if (height < 600) {
+  scale *= 0.92;
+}
 
 export default {
   width,

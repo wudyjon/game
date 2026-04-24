@@ -19,18 +19,18 @@ export default class PokerScene extends BaseScene {
     this.initDeck();
 
     this.btnDraw = {
-      x: Layout.px(20), y: Layout.px(120), w: Layout.width / 2 - Layout.px(30), h: Layout.px(44),
-      text: '抽牌', fontSize: 16,
+      x: Layout.px(20), y: Layout.px(100), w: Layout.width / 2 - Layout.px(30), h: Layout.px(40),
+      text: '抽牌', fontSize: 15,
       onTouchEnd: () => this.drawCards()
     };
     this.btnReset = {
-      x: Layout.width / 2 + Layout.px(10), y: Layout.px(120), w: Layout.width / 2 - Layout.px(30), h: Layout.px(44),
-      text: '重置牌组', fontSize: 16,
+      x: Layout.width / 2 + Layout.px(10), y: Layout.px(100), w: Layout.width / 2 - Layout.px(30), h: Layout.px(40),
+      text: '重置牌组', fontSize: 15,
       onTouchEnd: () => this.initDeck()
     };
     this.btnCount = {
-      x: Layout.px(20), y: Layout.px(80), w: Layout.width - Layout.px(40), h: Layout.px(32),
-      text: '设置抽取张数', fontSize: 12,
+      x: Layout.px(20), y: Layout.px(68), w: Layout.width - Layout.px(40), h: Layout.px(30),
+      text: '设置抽取张数', fontSize: 11,
       onTouchEnd: () => this.setCount()
     };
     this.elements.push(this.btnDraw, this.btnReset, this.btnCount);
@@ -94,18 +94,18 @@ export default class PokerScene extends BaseScene {
     this.drawButton(ctx, this.btnReset, 'rgba(255,255,255,0.15)', '#fff');
 
     // Draw cards
-    const cardW = Layout.px(48);
-    const cardH = Layout.px(68);
-    const gap = Layout.px(8);
+    const cardW = Layout.px(44);
+    const cardH = Layout.px(62);
+    const gap = Layout.px(6);
     const startX = Math.max(Layout.px(10), (Layout.width - (this.drawnCards.length * cardW + (this.drawnCards.length - 1) * gap)) / 2);
-    const cy = Layout.px(200);
+    const cy = Layout.px(170);
 
     this.drawnCards.forEach((card, i) => {
       const cx = startX + i * (cardW + gap);
       this.drawCard(ctx, card, cx, cy, cardW, cardH);
     });
 
-    History.render(ctx, Layout.px(16), Layout.px(300), Layout.width - Layout.px(32), History.getPoker());
+    History.render(ctx, Layout.px(16), Layout.px(270), Layout.width - Layout.px(32), History.getPoker());
   }
 
   drawCard(ctx, card, x, y, w, h) {

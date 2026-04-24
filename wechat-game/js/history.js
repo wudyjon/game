@@ -48,45 +48,45 @@ export default {
   render(ctx, x, y, w, items) {
     const labels = ['本局', '上1局', '上2局'];
     ctx.fillStyle = 'rgba(255,255,255,0.03)';
-    ctx.fillRect(x, y, w, Layout.px(140));
+    ctx.fillRect(x, y, w, Layout.px(120));
     ctx.strokeStyle = 'rgba(255,255,255,0.08)';
     ctx.lineWidth = 1;
-    ctx.strokeRect(x, y, w, Layout.px(140));
+    ctx.strokeRect(x, y, w, Layout.px(120));
 
     ctx.fillStyle = '#aaa';
-    ctx.font = `${Layout.fontSize(12)}px sans-serif`;
+    ctx.font = `${Layout.fontSize(11)}px sans-serif`;
     ctx.textAlign = 'center';
-    ctx.fillText('📋 最近3局记录', x + w / 2, y + Layout.px(18));
+    ctx.fillText('📋 最近3局记录', x + w / 2, y + Layout.px(16));
 
     if (!items || items.length === 0) {
       ctx.fillStyle = '#888';
-      ctx.fillText('暂无记录', x + w / 2, y + Layout.px(60));
+      ctx.fillText('暂无记录', x + w / 2, y + Layout.px(50));
       return;
     }
 
-    let ty = y + Layout.px(40);
+    let ty = y + Layout.px(36);
     [...items].reverse().forEach((item, i) => {
       ctx.fillStyle = 'rgba(255,255,255,0.05)';
-      ctx.fillRect(x + Layout.px(8), ty, w - Layout.px(16), Layout.px(28));
+      ctx.fillRect(x + Layout.px(8), ty, w - Layout.px(16), Layout.px(24));
 
       ctx.fillStyle = '#f39422';
-      ctx.font = `bold ${Layout.fontSize(11)}px sans-serif`;
+      ctx.font = `bold ${Layout.fontSize(10)}px sans-serif`;
       ctx.textAlign = 'left';
-      ctx.fillText(labels[i] || '', x + Layout.px(14), ty + Layout.px(18));
+      ctx.fillText(labels[i] || '', x + Layout.px(14), ty + Layout.px(16));
 
       ctx.fillStyle = '#fff';
-      ctx.font = `${Layout.fontSize(11)}px sans-serif`;
+      ctx.font = `${Layout.fontSize(10)}px sans-serif`;
       ctx.textAlign = 'center';
       const maxW = w - Layout.px(100);
       const text = item.text.length > 20 ? item.text.slice(0, 18) + '...' : item.text;
-      ctx.fillText(text, x + w / 2 + Layout.px(10), ty + Layout.px(18));
+      ctx.fillText(text, x + w / 2 + Layout.px(10), ty + Layout.px(16));
 
       ctx.fillStyle = '#888';
-      ctx.font = `${Layout.fontSize(10)}px sans-serif`;
+      ctx.font = `${Layout.fontSize(9)}px sans-serif`;
       ctx.textAlign = 'right';
-      ctx.fillText(item.time, x + w - Layout.px(14), ty + Layout.px(18));
+      ctx.fillText(item.time, x + w - Layout.px(14), ty + Layout.px(16));
 
-      ty += Layout.px(32);
+      ty += Layout.px(28);
     });
   }
 };

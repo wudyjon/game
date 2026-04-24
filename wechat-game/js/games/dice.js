@@ -12,13 +12,13 @@ export default class DiceScene extends BaseScene {
     this.animFrame = 0;
 
     this.btnRoll = {
-      x: Layout.px(30), y: Layout.px(120), w: Layout.width - Layout.px(60), h: Layout.px(44),
-      text: '掷骰子', fontSize: 16,
+      x: Layout.px(30), y: Layout.px(100), w: Layout.width - Layout.px(60), h: Layout.px(40),
+      text: '掷骰子', fontSize: 15,
       onTouchEnd: () => this.roll()
     };
     this.btnCount = {
-      x: Layout.px(30), y: Layout.px(80), w: Layout.width - Layout.px(60), h: Layout.px(32),
-      text: '设置骰子数量', fontSize: 12,
+      x: Layout.px(30), y: Layout.px(68), w: Layout.width - Layout.px(60), h: Layout.px(30),
+      text: '设置骰子数量', fontSize: 11,
       onTouchEnd: () => this.setCount()
     };
     this.elements.push(this.btnRoll, this.btnCount);
@@ -81,23 +81,23 @@ export default class DiceScene extends BaseScene {
     this.drawButton(ctx, this.btnRoll, '#e94560', '#fff');
 
     // Draw dice
-    const diceSize = Layout.px(50);
-    const gap = Layout.px(12);
+    const diceSize = Layout.px(44);
+    const gap = Layout.px(10);
     const startX = (Layout.width - (this.diceValues.length * diceSize + (this.diceValues.length - 1) * gap)) / 2;
     this.diceValues.forEach((val, i) => {
       const dx = startX + i * (diceSize + gap);
-      const dy = Layout.px(200);
+      const dy = Layout.px(170);
       this.drawDice(ctx, val, dx, dy, diceSize);
     });
 
     if (this.total > 0 && !this.animating) {
       ctx.fillStyle = '#e94560';
-      ctx.font = `bold ${Layout.fontSize(22)}px sans-serif`;
+      ctx.font = `bold ${Layout.fontSize(20)}px sans-serif`;
       ctx.textAlign = 'center';
-      ctx.fillText(`总和: ${this.total}`, Layout.width / 2, Layout.px(290));
+      ctx.fillText(`总和: ${this.total}`, Layout.width / 2, Layout.px(252));
     }
 
-    History.render(ctx, Layout.px(16), Layout.px(330), Layout.width - Layout.px(32), History.getDice());
+    History.render(ctx, Layout.px(16), Layout.px(290), Layout.width - Layout.px(32), History.getDice());
   }
 
   drawDice(ctx, value, x, y, size) {

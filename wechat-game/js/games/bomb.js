@@ -7,18 +7,18 @@ export default class BombScene extends BaseScene {
     this.reset();
     this.range = 100;
     this.btnStart = {
-      x: Layout.px(40), y: Layout.px(160), w: Layout.width - Layout.px(80), h: Layout.px(44),
-      text: '开始游戏', fontSize: 16,
+      x: Layout.px(40), y: Layout.px(140), w: Layout.width - Layout.px(80), h: Layout.px(40),
+      text: '开始游戏', fontSize: 15,
       onTouchEnd: () => this.startGame()
     };
     this.btnGuess = {
-      x: Layout.px(80), y: Layout.px(340), w: Layout.width - Layout.px(160), h: Layout.px(44),
-      text: '猜!', fontSize: 16,
+      x: Layout.px(80), y: Layout.px(280), w: Layout.width - Layout.px(160), h: Layout.px(40),
+      text: '猜!', fontSize: 15,
       onTouchEnd: () => this.doGuess()
     };
     this.btnReset = {
-      x: Layout.px(80), y: Layout.px(400), w: Layout.width - Layout.px(160), h: Layout.px(40),
-      text: '再玩一次', fontSize: 14,
+      x: Layout.px(80), y: Layout.px(335), w: Layout.width - Layout.px(160), h: Layout.px(36),
+      text: '再玩一次', fontSize: 13,
       onTouchEnd: () => this.reset()
     };
     this.elements.push(this.btnStart, this.btnGuess, this.btnReset);
@@ -88,17 +88,17 @@ export default class BombScene extends BaseScene {
       this.drawSubtitle(ctx, `数字范围: 1 - ${this.range}`, this.navHeight + Layout.px(44));
       this.drawButton(ctx, this.btnStart, '#e94560', '#fff');
     } else {
-      this.drawPanel(ctx, Layout.px(20), Layout.px(130), Layout.width - Layout.px(40), Layout.px(160), 0.05);
+      this.drawPanel(ctx, Layout.px(20), Layout.px(115), Layout.width - Layout.px(40), Layout.px(130), 0.05);
       ctx.fillStyle = '#fff';
-      ctx.font = `${Layout.fontSize(16)}px sans-serif`;
+      ctx.font = `${Layout.fontSize(15)}px sans-serif`;
       ctx.textAlign = 'center';
-      ctx.fillText(`当前范围: ${this.minVal} - ${this.maxVal}`, Layout.width / 2, Layout.px(160));
+      ctx.fillText(`当前范围: ${this.minVal} - ${this.maxVal}`, Layout.width / 2, Layout.px(140));
       ctx.fillStyle = '#e94560';
-      ctx.font = `bold ${Layout.fontSize(20)}px sans-serif`;
-      ctx.fillText(`剩余安全数字: ${this.maxVal - this.minVal + 1}`, Layout.width / 2, Layout.px(190));
+      ctx.font = `bold ${Layout.fontSize(18)}px sans-serif`;
+      ctx.fillText(`剩余安全数字: ${this.maxVal - this.minVal + 1}`, Layout.width / 2, Layout.px(168));
 
-      ctx.font = `${Layout.fontSize(40)}px sans-serif`;
-      ctx.fillText('💣', Layout.width / 2, Layout.px(230));
+      ctx.font = `${Layout.fontSize(36)}px sans-serif`;
+      ctx.fillText('💣', Layout.width / 2, Layout.px(200));
 
       this.drawButton(ctx, this.btnGuess, '#e94560', '#fff');
     }
@@ -107,7 +107,7 @@ export default class BombScene extends BaseScene {
       ctx.fillStyle = this.resultText.includes('BOMB') ? '#e94560' : '#fff';
       ctx.font = `${Layout.fontSize(this.resultText.includes('BOMB') ? 18 : 14)}px sans-serif`;
       ctx.textAlign = 'center';
-      ctx.fillText(this.resultText, Layout.width / 2, Layout.px(400));
+      ctx.fillText(this.resultText, Layout.width / 2, Layout.px(340));
       if (!this.playing) {
         this.drawButton(ctx, this.btnReset, 'rgba(255,255,255,0.15)', '#fff');
       }

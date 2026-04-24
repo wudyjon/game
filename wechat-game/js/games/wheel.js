@@ -71,29 +71,29 @@ export default class WheelScene extends BaseScene {
     this.colors = ['#e94560', '#0f3460', '#533483', '#f39422', '#16c79a', '#ef476f', '#118ab2', '#073b4c', '#e74c3c', '#27ae60'];
     this.playerItems = ['玩家1', '玩家2', '玩家3'];
     this.gameItems = ['喝1杯', '喝2杯', '真心话', '大冒险'];
-    const r = Math.min(Layout.width / 2 - Layout.px(20), Layout.px(140));
-    const cy = Layout.px(160);
+    const r = Math.min(Layout.width / 2 - Layout.px(20), Layout.px(110));
+    const cy = Layout.px(140);
     this.leftWheel = new MiniWheel(Layout.width * 0.25, cy, r, this.playerItems, this.colors);
     this.rightWheel = new MiniWheel(Layout.width * 0.75, cy, r, this.gameItems, this.colors);
 
     this.spinLeftBtn = {
-      x: Layout.px(20), y: Layout.px(310), w: Layout.width / 2 - Layout.px(30), h: Layout.px(40),
-      text: '转玩家', fontSize: 14,
+      x: Layout.px(20), y: Layout.px(260), w: Layout.width / 2 - Layout.px(30), h: Layout.px(36),
+      text: '转玩家', fontSize: 13,
       onTouchEnd: () => this.leftWheel.spin()
     };
     this.spinRightBtn = {
-      x: Layout.width / 2 + Layout.px(10), y: Layout.px(310), w: Layout.width / 2 - Layout.px(30), h: Layout.px(40),
-      text: '转游戏', fontSize: 14,
+      x: Layout.width / 2 + Layout.px(10), y: Layout.px(260), w: Layout.width / 2 - Layout.px(30), h: Layout.px(36),
+      text: '转游戏', fontSize: 13,
       onTouchEnd: () => this.rightWheel.spin()
     };
     this.editLeftBtn = {
-      x: Layout.px(20), y: Layout.px(420), w: Layout.width / 2 - Layout.px(30), h: Layout.px(36),
-      text: '编辑名单', fontSize: 12,
+      x: Layout.px(20), y: Layout.px(360), w: Layout.width / 2 - Layout.px(30), h: Layout.px(32),
+      text: '编辑名单', fontSize: 11,
       onTouchEnd: () => this.editItems('player')
     };
     this.editRightBtn = {
-      x: Layout.width / 2 + Layout.px(10), y: Layout.px(420), w: Layout.width / 2 - Layout.px(30), h: Layout.px(36),
-      text: '编辑项目', fontSize: 12,
+      x: Layout.width / 2 + Layout.px(10), y: Layout.px(360), w: Layout.width / 2 - Layout.px(30), h: Layout.px(32),
+      text: '编辑项目', fontSize: 11,
       onTouchEnd: () => this.editItems('game')
     };
     this.elements.push(this.spinLeftBtn, this.spinRightBtn, this.editLeftBtn, this.editRightBtn);
@@ -155,16 +155,16 @@ export default class WheelScene extends BaseScene {
       ctx.fillStyle = '#e94560';
       ctx.font = `bold ${Layout.fontSize(16)}px sans-serif`;
       ctx.textAlign = 'center';
-      ctx.fillText('🎉 ' + this.leftWheel.result, Layout.width * 0.25, Layout.px(370));
+      ctx.fillText('🎉 ' + this.leftWheel.result, Layout.width * 0.25, Layout.px(310));
     }
     if (this.rightWheel.result) {
       ctx.fillStyle = '#e94560';
-      ctx.font = `bold ${Layout.fontSize(16)}px sans-serif`;
+      ctx.font = `bold ${Layout.fontSize(14)}px sans-serif`;
       ctx.textAlign = 'center';
-      ctx.fillText('🎉 ' + this.rightWheel.result, Layout.width * 0.75, Layout.px(370));
+      ctx.fillText('🎉 ' + this.rightWheel.result, Layout.width * 0.75, Layout.px(310));
     }
 
-    this.drawPanel(ctx, Layout.px(16), Layout.px(400), Layout.width - Layout.px(32), Layout.px(70), 0.03);
+    this.drawPanel(ctx, Layout.px(16), Layout.px(350), Layout.width - Layout.px(32), Layout.px(58), 0.03);
     this.drawButton(ctx, this.editLeftBtn, 'rgba(255,255,255,0.15)', '#fff');
     this.drawButton(ctx, this.editRightBtn, 'rgba(255,255,255,0.15)', '#fff');
   }
