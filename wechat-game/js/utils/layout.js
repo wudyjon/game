@@ -1,0 +1,34 @@
+const info = wx.getSystemInfoSync();
+const width = info.windowWidth;
+const height = info.windowHeight;
+const ratio = info.pixelRatio;
+
+const DESIGN_W = 375;
+const DESIGN_H = 667;
+
+const scale = Math.min(width / DESIGN_W, height / DESIGN_H);
+
+export default {
+  width,
+  height,
+  ratio,
+  scale,
+  designW: DESIGN_W,
+  designH: DESIGN_H,
+
+  px(val) {
+    return val * scale;
+  },
+
+  x(val) {
+    return val * scale;
+  },
+
+  y(val) {
+    return val * scale;
+  },
+
+  fontSize(val) {
+    return Math.max(10, val * scale);
+  }
+};
