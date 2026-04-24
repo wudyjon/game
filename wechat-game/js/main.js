@@ -56,7 +56,7 @@ function loop(timestamp) {
     currentScene.render(ctx);
   }
 
-  canvas.requestAnimationFrame(loop);
+  requestAnimationFrame(loop);
 }
 
 // 导出全局切换方法
@@ -65,6 +65,6 @@ wx.switchGameScene = switchScene;
 export default {
   start() {
     switchScene('menu');
-    canvas.requestAnimationFrame(loop);
+    requestAnimationFrame(loop);
   }
 };
