@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>酒桌小游戏合集</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍺 酒桌小游戏</h1>
+            <p>聚会必备，随机选择，公平公正</p>
+        </header>
+
+        <nav class="game-nav">
+            <button class="nav-btn active" data-game="menu">游戏主页</button>
+            <button class="nav-btn" data-game="wheel">幸运转盘</button>
+            <button class="nav-btn" data-game="bomb">数字炸弹</button>
+            <button class="nav-btn" data-game="truth">真心话大冒险</button>
+            <button class="nav-btn" data-game="dice">掷骰子</button>
+        </nav>
+
+        <!-- 游戏主页 -->
+        <section id="menu" class="game-section active">
+            <div class="random-picker">
+                <h2>🎲 不知道玩什么？随机选一个！</h2>
+                <button id="randomGameBtn" class="btn-primary">随机选择游戏</button>
+                <div id="randomResult" class="result-box"></div>
+            </div>
+            <div class="game-cards">
+                <div class="card" data-game="wheel">
+                    <div class="card-icon">🎯</div>
+                    <h3>幸运转盘</h3>
+                    <p>输入玩家名字，转盘随机选择幸运儿</p>
+                </div>
+                <div class="card" data-game="bomb">
+                    <div class="card-icon">💣</div>
+                    <h3>数字炸弹</h3>
+                    <p>猜数字，猜中炸弹数字的人接受惩罚</p>
+                </div>
+                <div class="card" data-game="truth">
+                    <div class="card-icon">🎭</div>
+                    <h3>真心话大冒险</h3>
+                    <p>随机抽取真心话或大冒险题目</p>
+                </div>
+                <div class="card" data-game="dice">
+                    <div class="card-icon">🎲</div>
+                    <h3>掷骰子</h3>
+                    <p>支持多颗骰子，比大小定胜负</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 幸运转盘 -->
+        <section id="wheel" class="game-section">
+            <h2>🎯 幸运转盘</h2>
+            <div class="wheel-container">
+                <canvas id="wheelCanvas" width="400" height="400"></canvas>
+                <div class="wheel-pointer">▼</div>
+            </div>
+            <button id="spinBtn" class="btn-primary">开始转盘</button>
+            <div class="players-input">
+                <h3>玩家名单</h3>
+                <div id="playersList">
+                    <input type="text" class="player-input" placeholder="玩家1" value="玩家1">
+                    <input type="text" class="player-input" placeholder="玩家2" value="玩家2">
+                    <input type="text" class="player-input" placeholder="玩家3" value="玩家3">
+                </div>
+                <button id="addPlayerBtn" class="btn-secondary">添加玩家</button>
+                <button id="resetPlayersBtn" class="btn-secondary">重置名单</button>
+            </div>
+            <div id="wheelResult" class="result-box"></div>
+        </section>
+
+        <!-- 数字炸弹 -->
+        <section id="bomb" class="game-section">
+            <h2>💣 数字炸弹</h2>
+            <div class="bomb-setup">
+                <label>数字范围: 1 - <input type="number" id="bombRange" value="100" min="10" max="1000"></label>
+                <button id="startBombBtn" class="btn-primary">开始游戏</button>
+            </div>
+            <div id="bombGame" class="bomb-game hidden">
+                <div class="bomb-info">
+                    <p>当前范围: <span id="bombMin">1</span> - <span id="bombMax">100</span></p>
+                    <p>剩余安全数字: <span id="safeCount">99</span></p>
+                </div>
+                <div class="bomb-display" id="bombDisplay">💣</div>
+                <input type="number" id="bombGuess" placeholder="输入数字">
+                <button id="guessBtn" class="btn-primary">猜!</button>
+            </div>
+            <div id="bombResult" class="result-box"></div>
+            <button id="resetBombBtn" class="btn-secondary hidden">再玩一次</button>
+        </section>
+
+        <!-- 真心话大冒险 -->
+        <section id="truth" class="game-section">
+            <h2>🎭 真心话大冒险</h2>
+            <div class="truth-buttons">
+                <button id="truthBtn" class="btn-truth">真心话</button>
+                <button id="dareBtn" class="btn-dare">大冒险</button>
+                <button id="randomTruthBtn" class="btn-primary">随机</button>
+            </div>
+            <div id="truthCard" class="truth-card hidden">
+                <div class="card-type" id="cardType"></div>
+                <div class="card-content" id="cardContent"></div>
+            </div>
+            <button id="nextTruthBtn" class="btn-secondary hidden">下一题</button>
+        </section>
+
+        <!-- 掷骰子 -->
+        <section id="dice" class="game-section">
+            <h2>🎲 掷骰子</h2>
+            <div class="dice-setup">
+                <label>骰子数量: <input type="number" id="diceCount" value="1" min="1" max="6"></label>
+                <button id="rollDiceBtn" class="btn-primary">掷骰子</button>
+            </div>
+            <div id="diceContainer" class="dice-container"></div>
+            <div id="diceTotal" class="result-box"></div>
+        </section>
+
+        <footer>
+            <p>适度饮酒，切勿贪杯 🍻</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
