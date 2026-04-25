@@ -54,10 +54,30 @@ function loop(timestamp) {
   if (currentScene) {
     currentScene.update(dt);
     currentScene.render(ctx);
+    currentScene.renderInput(ctx);
   }
 
   requestAnimationFrame(loop);
 }
+
+// 键盘事件
+wx.onKeyboardInput((e) => {
+  if (currentScene && currentScene.onKeyboardInput) {
+    currentScene.onKeyboardInput(e.value);
+  }
+});
+
+wx.onKeyboardConfirm((e) => {
+  if (currentScene && currentScene.onKeyboardConfirm) {
+    currentScene.onKeyboardConfirm(e.value);
+  }
+});
+
+wx.onKeyboardComplete(() => {
+  if (currentScene && currentScene.onKeyboardComplete) {
+    currentScene.onKeyboardComplete();
+  }
+});
 
 // 导出全局切换方法
 wx.switchGameScene = switchScene;

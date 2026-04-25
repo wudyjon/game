@@ -84,6 +84,11 @@
                         <button id="addPlayerBtn" class="btn-secondary">添加玩家</button>
                         <button id="resetPlayersBtn" class="btn-secondary">重置名单</button>
                     </div>
+                    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+                        <button class="btn-secondary" onclick="loadPlayerPreset(4)" style="font-size:0.8rem;padding:5px 10px;">4位玩家</button>
+                        <button class="btn-secondary" onclick="loadPlayerPreset(6)" style="font-size:0.8rem;padding:5px 10px;">6位玩家</button>
+                        <button class="btn-secondary" onclick="loadPlayerPreset(8)" style="font-size:0.8rem;padding:5px 10px;">8位玩家</button>
+                    </div>
                 </div>
 
                 <!-- 右边：游戏/惩罚转盘 -->
@@ -106,6 +111,11 @@
                         </div>
                         <button id="addGameBtn" class="btn-secondary">添加项目</button>
                         <button id="resetGamesBtn" class="btn-secondary">重置项目</button>
+                    </div>
+                    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+                        <button class="btn-secondary" onclick="loadGamePreset('xiaojie')" style="font-size:0.8rem;padding:5px 10px;">小姐牌</button>
+                        <button class="btn-secondary" onclick="loadGamePreset('shaoye')" style="font-size:0.8rem;padding:5px 10px;">少爷牌</button>
+                        <button class="btn-secondary" onclick="loadGamePreset('shangk')" style="font-size:0.8rem;padding:5px 10px;">商K牌</button>
                     </div>
                 </div>
             </div>
@@ -150,7 +160,7 @@
         <section id="dice" class="game-section">
             <h2>🎲 掷骰子</h2>
             <div class="dice-setup">
-                <label>骰子数量: <input type="number" id="diceCount" value="1" min="1" max="6"></label>
+                <label>骰子数量: <input type="number" id="diceCount" value="1" min="1" max="20"></label>
                 <button id="rollDiceBtn" class="btn-primary">掷骰子</button>
             </div>
             <div id="diceContainer" class="dice-container"></div>
@@ -166,7 +176,7 @@
         <section id="poker" class="game-section">
             <h2>🃏 抽扑克</h2>
             <div class="dice-setup">
-                <label>抽取张数: <input type="number" id="pokerCount" value="1" min="1" max="10"></label>
+                <label>抽取张数: <input type="number" id="pokerCount" value="1" min="1" max="20"></label>
                 <button id="drawPokerBtn" class="btn-primary">抽牌</button>
                 <button id="resetPokerBtn" class="btn-secondary">重置牌组</button>
             </div>

@@ -23,8 +23,11 @@ export default class MenuScene extends BaseScene {
     const margin = Layout.px(16);
     const gap = Layout.px(12);
     const cardW = (Layout.width - margin * 2 - gap) / cols;
-    const cardH = Layout.px(88);
-    const startY = Layout.px(170);
+    const cardH = Layout.px(84);
+
+    const panelY = this.topOffset + Layout.px(8);
+    const panelH = Layout.px(145);
+    const startY = panelY + panelH + Layout.px(20);
 
     games.forEach((g, i) => {
       const col = i % cols;
@@ -40,11 +43,11 @@ export default class MenuScene extends BaseScene {
 
     this.randomBtn = {
       x: Layout.px(40),
-      y: Layout.px(68),
+      y: panelY + Layout.px(44),
       w: Layout.width - Layout.px(80),
-      h: Layout.px(40),
+      h: Layout.px(36),
       text: '随机选择游戏',
-      fontSize: 16,
+      fontSize: 15,
       onTouchEnd: () => this.startRandom()
     };
     this.elements.push(this.randomBtn);
@@ -79,32 +82,56 @@ export default class MenuScene extends BaseScene {
   render(ctx) {
     super.render(ctx);
 
-    // Random picker panel
-    this.drawPanel(ctx, Layout.px(16), Layout.px(48), Layout.width - Layout.px(32), Layout.px(110), 0.05);
+    const panelY = this.topOffset + Layout.px(8);
 
-    this.drawTitle(ctx, '🎲 不知道玩什么？', Layout.px(56));
+    // Random picker panel
+    this.drawPanel(ctx, Layout.px(16), panelY, Layout.width - Layout.px(32), Layout.px(110), 0.05);
+
+    this.drawTitle(ctx, '🎲 不知道玩什么？', panelY + Layout.px(12));
     this.drawButton(ctx, this.randomBtn, 'linear-gradient(45deg, #e94560, #ff6b6b)', '#fff');
 
     if (this.randomText) {
       ctx.fillStyle = this.randomAnimating ? '#fff' : '#e94560';
       ctx.font = `${Layout.fontSize(this.randomAnimating ? 14 : 17)}px sans-serif`;
       ctx.textAlign = 'center';
-      ctx.fillText(this.randomText, Layout.width / 2, Layout.px(128));
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillText(this.randomText, Layout.width / 2, this.randomBtn.y + this.randomBtn.h + Layout.px(20));
     }
 
     // Cards
     this.cards.forEach(c => {
       this.drawPanel(ctx, c.x, c.y, c.w, c.h, 0.05);
+
       ctx.fillStyle = '#f39422';
-      ctx.font = `${Layout.fontSize(28)}px sans-serif`;
+      ctx.font = `${Layout.fontSize(26)}px sans-serif`;
       ctx.textAlign = 'center';
-      ctx.fillText(c.icon, c.x + c.w / 2, c.y + Layout.px(10));
+      ctx.textBaseline = 'middle';
+      ctx.fillText(c.icon, c.x + c.w / 2, c.y + Layout.px(24));
+
       ctx.fillStyle = '#e94560';
       ctx.font = `bold ${Layout.fontSize(13)}px sans-serif`;
-      ctx.fillText(c.name, c.x + c.w / 2, c.y + Layout.px(42));
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillText(c.name, c.x + c.w / 2, c.y + Layout.px(52));
+
       ctx.fillStyle = '#aaa';
       ctx.font = `${Layout.fontSize(10)}px sans-serif`;
-      ctx.fillText(c.desc, c.x + c.w / 2, c.y + Layout.px(62));
+      const maxDescWidth = c.w - Layout.px(8);
+      const chars = c.desc.split('');
+      let line = '';
+      const lines = [];
+      for (const ch of chars) {
+        const test = line + ch;
+        if (ctx.measureText(test).width > maxDescWidth && line) {
+          lines.push(line);
+          line = ch;
+        } else {
+          line = test;
+        }
+      }
+      lines.push(line);
+      lines.forEach((l, i) => {
+        ctx.fillText(l, c.x + c.w / 2, c.y + Layout.px(70) + i * Layout.px(14));
+      });
     });
   }
 }
